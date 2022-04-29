@@ -27,7 +27,7 @@ public class TreasureHuntStepEntity {
     @JoinColumn(name = "treasure_hunt_id")
     private TreasureHuntEntity treasureHunt;
 
-    @Column(name = "order")
+    @Column(name = "step_order")
     private Integer order;
 
     @ManyToOne

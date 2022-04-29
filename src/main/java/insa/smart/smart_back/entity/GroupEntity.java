@@ -6,7 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "group")
+@Table(name = "user_group")
 public class GroupEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
