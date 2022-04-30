@@ -9,7 +9,7 @@ import javax.persistence.Column;
 @Getter
 @Setter
 @AllArgsConstructor
-public class UserDto {
+public class UserDTO {
 
     private String username;
     private String email;

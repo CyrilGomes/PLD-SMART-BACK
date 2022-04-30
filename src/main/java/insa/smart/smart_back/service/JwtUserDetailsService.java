@@ -1,6 +1,6 @@
 package insa.smart.smart_back.service;
 
-import insa.smart.smart_back.dto.UserDto;
+import insa.smart.smart_back.dto.UserDTO;
 import insa.smart.smart_back.entity.UserEntity;
 import insa.smart.smart_back.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.xml.crypto.Data;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
@@ -28,7 +26,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         UserEntity user = userRepository.findByEmail(email);
         if (user != null) {
-            return new User(user.getUsername(),
+            return new User(user.getEmail(),
                     user.getHashed_password(),
                     new ArrayList<>());
         } else {
@@ -36,7 +34,7 @@ public class JwtUserDetailsService implements UserDetailsService {
         }
     }
 
-    public UserEntity save(UserDto user) {
+    public UserEntity save(UserDTO user) {
         UserEntity newUser = new UserEntity();
         newUser.setUsername(user.getUsername());
         newUser.setEmail(user.getEmail());

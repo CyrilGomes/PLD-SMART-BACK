@@ -1,7 +1,7 @@
 package insa.smart.smart_back.controller;
 
 import insa.smart.smart_back.configuration.JwtTokenUtil;
-import insa.smart.smart_back.dto.UserDto;
+import insa.smart.smart_back.dto.UserDTO;
 import insa.smart.smart_back.dto.request.JwtRequest;
 import insa.smart.smart_back.dto.response.JwtResponse;
 import insa.smart.smart_back.service.JwtUserDetailsService;
@@ -40,7 +40,7 @@ public class AuthenticationController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseEntity<?> saveUser(@RequestBody UserDto user) throws Exception {
+    public ResponseEntity<?> saveUser(@RequestBody UserDTO user) throws Exception {
         return ResponseEntity.ok(userDetailsService.save(user));
     }
 
