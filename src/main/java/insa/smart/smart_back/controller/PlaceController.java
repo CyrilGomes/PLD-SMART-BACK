@@ -34,6 +34,28 @@ public class PlaceController {
         return ResponseEntity.ok(placeService.getAll());
     }
 
+
+    @PostMapping(value = "/{id}/star")
+    @ResponseBody
+    public ResponseEntity<?> starPlace(Principal principal, @PathVariable Long id) {
+
+        placeService.starPlace(id, principal);
+
+        return ResponseEntity.ok("Place starred");
+
+    }
+
+    @PostMapping(value = "/{id}/visit")
+    @ResponseBody
+    public ResponseEntity<?> visitPlace(Principal principal, @PathVariable Long id) {
+
+        placeService.visitPlace(id, principal);
+
+        return ResponseEntity.ok("Place visited");
+
+    }
+
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody

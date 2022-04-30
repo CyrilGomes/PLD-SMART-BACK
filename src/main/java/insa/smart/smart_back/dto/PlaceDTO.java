@@ -19,6 +19,9 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class PlaceDTO {
+
+    private Long id;
+
     private String description;
 
     private String name;

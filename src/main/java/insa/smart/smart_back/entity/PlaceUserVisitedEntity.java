@@ -6,6 +6,8 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "place_user_visited")
 public class PlaceUserVisitedEntity {
+
+    //TODO eventuellement mettre une clé composite
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
