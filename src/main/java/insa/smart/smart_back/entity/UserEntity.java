@@ -1,10 +1,16 @@
 package insa.smart.smart_back.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "users")
 public class UserEntity {
@@ -91,220 +97,15 @@ public class UserEntity {
     @OneToMany(mappedBy = "from_user", orphanRemoval = true)
     private Set<InvitationTreasureHuntEntity> invitationTreasureHuntReceived = new LinkedHashSet<>();
 
-    public Set<InvitationTreasureHuntEntity> getInvitationTreasureHuntReceived() {
-        return invitationTreasureHuntReceived;
-    }
+    @ManyToMany
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"))
+    private Collection<RoleEntity> roles;
 
-    public void setInvitationTreasureHuntReceived(Set<InvitationTreasureHuntEntity> invitationTreasureHuntReceived) {
-        this.invitationTreasureHuntReceived = invitationTreasureHuntReceived;
-    }
 
-    public Set<InvitationTreasureHuntEntity> getInvitationForTreasureHuntSent() {
-        return invitationForTreasureHuntSent;
-    }
-
-    public void setInvitationForTreasureHuntSent(Set<InvitationTreasureHuntEntity> invitationForTreasureHuntSent) {
-        this.invitationForTreasureHuntSent = invitationForTreasureHuntSent;
-    }
-
-    public Set<ParticipateTreasureHuntEntity> getParticipedTreasureHunts() {
-        return participedTreasureHunts;
-    }
-
-    public void setParticipedTreasureHunts(Set<ParticipateTreasureHuntEntity> participedTreasureHunts) {
-        this.participedTreasureHunts = participedTreasureHunts;
-    }
-
-    public Set<TreasureHuntEntity> getTreasureHuntEntities() {
-        return treasureHuntEntities;
-    }
-
-    public void setTreasureHuntEntities(Set<TreasureHuntEntity> treasureHuntEntities) {
-        this.treasureHuntEntities = treasureHuntEntities;
-    }
-
-    public Set<SuggestedPlaceHintEntity> getSuggestedPlaceHints() {
-        return suggestedPlaceHints;
-    }
-
-    public void setSuggestedPlaceHints(Set<SuggestedPlaceHintEntity> suggestedPlaceHints) {
-        this.suggestedPlaceHints = suggestedPlaceHints;
-    }
-
-    public Set<CommentReportEntity> getCommentReportEntities() {
-        return commentReportEntities;
-    }
-
-    public void setCommentReportEntities(Set<CommentReportEntity> commentReportEntities) {
-        this.commentReportEntities = commentReportEntities;
-    }
-
-    public Set<CommentStatusEntity> getCommentStatusEntities() {
-        return commentStatusEntities;
-    }
-
-    public void setCommentStatusEntities(Set<CommentStatusEntity> commentStatusEntities) {
-        this.commentStatusEntities = commentStatusEntities;
-    }
-
-    public Set<PlaceReportEntity> getPlaceReportEntities() {
-        return placeReportEntities;
-    }
-
-    public void setPlaceReportEntities(Set<PlaceReportEntity> placeReportEntities) {
-        this.placeReportEntities = placeReportEntities;
-    }
-
-    public Set<PlaceStatusEntity> getPlaceStatusEntities() {
-        return placeStatusEntities;
-    }
-
-    public void setPlaceStatusEntities(Set<PlaceStatusEntity> placeStatusEntities) {
-        this.placeStatusEntities = placeStatusEntities;
-    }
-
-    public Set<CommentDownvoteEntity> getDownvotes() {
-        return downvotes;
-    }
-
-    public void setDownvotes(Set<CommentDownvoteEntity> downvotes) {
-        this.downvotes = downvotes;
-    }
-
-    public Set<CommentUpvoteEntity> getUpvotes() {
-        return upvotes;
-    }
-
-    public void setUpvotes(Set<CommentUpvoteEntity> upvotes) {
-        this.upvotes = upvotes;
-    }
-
-    public Set<PasswordRecoveryEntity> getPasswordRecoveryEntities() {
-        return passwordRecoveryEntities;
-    }
-
-    public void setPasswordRecoveryEntities(Set<PasswordRecoveryEntity> passwordRecoveryEntities) {
-        this.passwordRecoveryEntities = passwordRecoveryEntities;
-    }
-
-    public Set<SanctionEntity> getSanctions() {
-        return sanctions;
-    }
-
-    public void setSanctions(Set<SanctionEntity> sanctions) {
-        this.sanctions = sanctions;
-    }
-
-    public Set<GroupMemberEntity> getGroupMembers() {
-        return groupMembers;
-    }
-
-    public void setGroupMembers(Set<GroupMemberEntity> groupMembers) {
-        this.groupMembers = groupMembers;
-    }
-
-    public Set<CommentEntity> getComments() {
-        return comments;
-    }
-
-    public void setComments(Set<CommentEntity> comments) {
-        this.comments = comments;
-    }
-
-    public Set<GroupModeratorEntity> getGroupModeratorEntities() {
-        return groupModeratorEntities;
-    }
-
-    public void setGroupModeratorEntities(Set<GroupModeratorEntity> groupModeratorEntities) {
-        this.groupModeratorEntities = groupModeratorEntities;
-    }
-
-    public Set<PlaceUserStarredEntity> getPlaceUserStarredEntities() {
-        return placeUserStarredEntities;
-    }
-
-    public void setPlaceUserStarredEntities(Set<PlaceUserStarredEntity> placeUserStarredEntities) {
-        this.placeUserStarredEntities = placeUserStarredEntities;
-    }
-
-    public Set<PlaceUserVisitedEntity> getPlaceUserVisitedEntities() {
-        return placeUserVisitedEntities;
-    }
-
-    public void setPlaceUserVisitedEntities(Set<PlaceUserVisitedEntity> placeUserVisitedEntities) {
-        this.placeUserVisitedEntities = placeUserVisitedEntities;
-    }
-
-    public Set<PlaceEntity> getCreated_places() {
-        return created_places;
-    }
-
-    public void setCreated_places(Set<PlaceEntity> createdPlaces) {
-        this.created_places = createdPlaces;
-    }
-
-    public Set<GroupEntity> getCreated_groups() {
-        return created_groups;
-    }
-
-    public void setCreated_groups(Set<GroupEntity> created_groups) {
-        this.created_groups = created_groups;
-    }
-
-    public LocalDate getDeleted_at() {
-        return deleted_at;
-    }
-
-    public void setDeleted_at(LocalDate deleted_at) {
-        this.deleted_at = deleted_at;
-    }
-
-    public LocalDate getLast_modification_at() {
-        return last_modification_at;
-    }
-
-    public void setLast_modification_at(LocalDate last_modification_at) {
-        this.last_modification_at = last_modification_at;
-    }
-
-    public LocalDate getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(LocalDate created_at) {
-        this.created_at = created_at;
-    }
-
-    public String getHashed_password() {
-        return hashed_password;
-    }
-
-    public void setHashed_password(String hashed_password) {
-        this.hashed_password = hashed_password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
 }

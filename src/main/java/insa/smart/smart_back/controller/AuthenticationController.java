@@ -5,6 +5,7 @@ import insa.smart.smart_back.dto.UserDTO;
 import insa.smart.smart_back.dto.request.JwtRequest;
 import insa.smart.smart_back.dto.response.JwtResponse;
 import insa.smart.smart_back.service.JwtUserDetailsService;
+import insa.smart.smart_back.service.abstraction.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,9 +27,15 @@ public class AuthenticationController {
     @Autowired
     private JwtUserDetailsService userDetailsService;
 
+    @Autowired
+    private UserService userService;
+
+
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
+
+        System.out.println("IL se co wala");
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
         final UserDetails userDetails =
@@ -41,10 +48,12 @@ public class AuthenticationController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity<?> saveUser(@RequestBody UserDTO user) throws Exception {
-        return ResponseEntity.ok(userDetailsService.save(user));
+        return ResponseEntity.ok(userService.registerNewUserAccount(user));
     }
 
     private void authenticate(String username, String password) throws Exception {
+
+        System.out.println("UwU");
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (DisabledException e) {
