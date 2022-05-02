@@ -1,15 +1,11 @@
 package insa.smart.smart_back.service.implementation;
 
+import insa.smart.smart_back.dto.CommentDTO;
 import insa.smart.smart_back.dto.PlaceDTO;
+import insa.smart.smart_back.dto.mapper.CommentMapper;
 import insa.smart.smart_back.dto.mapper.PlaceMapper;
-import insa.smart.smart_back.entity.PlaceEntity;
-import insa.smart.smart_back.entity.PlaceUserStarredEntity;
-import insa.smart.smart_back.entity.PlaceUserVisitedEntity;
-import insa.smart.smart_back.entity.UserEntity;
-import insa.smart.smart_back.repository.PlaceEntityRepository;
-import insa.smart.smart_back.repository.PlaceUserStarredRepository;
-import insa.smart.smart_back.repository.PlaceUserVisitedRepository;
-import insa.smart.smart_back.repository.UserRepository;
+import insa.smart.smart_back.entity.*;
+import insa.smart.smart_back.repository.*;
 import insa.smart.smart_back.service.abstraction.PlaceService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.security.Principal;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,12 +29,16 @@ public class PlaceServiceImpl implements PlaceService {
     private UserRepository userRepository;
 
     @Autowired
+    private CommentRepository commentRepository;
+
+    @Autowired
     private PlaceUserStarredRepository placeUserStarredRepository;
 
     @Autowired
     private PlaceUserVisitedRepository placeUserVisitedRepository;
 
-    private PlaceMapper placeMapper = new PlaceMapper();
+    private final PlaceMapper placeMapper = new PlaceMapper();
+    private final CommentMapper commentMapper = new CommentMapper();
 
 
     @Override
@@ -80,5 +81,32 @@ public class PlaceServiceImpl implements PlaceService {
 
     }
 
+    @Override
+    public List<PlaceDTO> getVisitedPlaceByUser(Principal principal) {
+        UserEntity user = userRepository.findByEmail(principal.getName());
 
+        return user.getPlaceUserVisitedEntities().stream().map(placeUserVisitedEntity -> placeMapper.convertToDto(placeRepository.getById(placeUserVisitedEntity.getPlace().getId()))).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PlaceDTO> getStarredPlaceByUser(Principal principal) {
+        UserEntity user = userRepository.findByEmail(principal.getName());
+
+        return user.getPlaceUserStarredEntities().stream().map(placeUserStarredEntity -> placeMapper.convertToDto(placeRepository.getById(placeUserStarredEntity.getPlace().getId()))).collect(Collectors.toList());
+    }
+
+    @Override
+    public void addComment(Long placeId, CommentDTO commentDTO, Principal principal) {
+        UserEntity user = userRepository.findByEmail(principal.getName());
+        PlaceEntity place = placeRepository.getById(placeId);
+
+        CommentEntity comment = commentMapper.convertToEntity(commentDTO, place, user);
+        commentRepository.save(comment);
+    }
+
+    @Override
+    public List<CommentDTO> getCommentsByPlace(Long placeId) {
+        PlaceEntity place = placeRepository.getById(placeId);
+        return place.getComments().stream().map(commentMapper::convertToDTO).collect(Collectors.toList());
+    }
 }

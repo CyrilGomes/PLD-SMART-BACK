@@ -1,5 +1,6 @@
 package insa.smart.smart_back.controller;
 
+import insa.smart.smart_back.dto.CommentDTO;
 import insa.smart.smart_back.dto.PlaceDTO;
 import insa.smart.smart_back.dto.mapper.PlaceMapper;
 import insa.smart.smart_back.dto.request.JwtRequest;
@@ -71,5 +72,20 @@ public class PlaceController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erreur lors de la création" +
                 " de l'endroit");
 
+    }
+
+    @PostMapping(value = "/{id}/comment")
+    @ResponseBody
+    public ResponseEntity<?> commentPlace(Principal principal, @PathVariable Long id, @RequestBody CommentDTO comment) {
+
+        placeService.addComment(id, comment, principal);
+
+        return ResponseEntity.ok("Comment added");
+    }
+
+    @GetMapping(value = "/{id}/comments")
+    @ResponseBody
+    public ResponseEntity<?> getComments(@PathVariable Long id) {
+        return ResponseEntity.ok(placeService.getCommentsByPlace(id));
     }
 }

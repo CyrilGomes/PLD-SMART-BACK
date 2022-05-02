@@ -15,13 +15,15 @@ import java.time.LocalDate;
 public class PlaceMapper {
 
 
-    private ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper modelMapper = new ModelMapper();
 
 
     public PlaceEntity convertToEntity(PlaceDTO placeDTO, UserEntity user) throws ParseException {
         PlaceEntity place = modelMapper.map(placeDTO, PlaceEntity.class);
         place.setCreated_by(user);
         place.setPosition(placeDTO.getPosition());
+
+        // todo: c'est la faute de cyril
         place.setCreated_at(LocalDate.now());
 
         /*
