@@ -2,7 +2,8 @@ package insa.smart.smart_back.service.abstraction;
 
 import insa.smart.smart_back.dto.CommentDTO;
 import insa.smart.smart_back.dto.PlaceDTO;
-import insa.smart.smart_back.dto.UserDTO;
+import insa.smart.smart_back.dto.ResumedPlaceDTO;
+import org.geolatte.geom.Point;
 
 import java.security.Principal;
 import java.text.ParseException;
@@ -11,6 +12,14 @@ import java.util.List;
 public interface PlaceService {
 
     List<PlaceDTO> getAll();
+
+    List<ResumedPlaceDTO> getAllResumed();
+
+    List<PlaceDTO> getPlacesWithinRange(Point p, double range);
+
+    List<ResumedPlaceDTO> getResumedPlacesWithinRange(Point p, double range);
+
+    PlaceDTO getPlaceById(Long id);
 
     PlaceDTO createPlace(PlaceDTO placeDTO) throws ParseException;
 
