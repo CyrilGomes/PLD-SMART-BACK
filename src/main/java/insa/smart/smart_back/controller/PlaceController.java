@@ -2,17 +2,11 @@ package insa.smart.smart_back.controller;
 
 import insa.smart.smart_back.dto.CommentDTO;
 import insa.smart.smart_back.dto.PlaceDTO;
-import insa.smart.smart_back.dto.mapper.PlaceMapper;
-import insa.smart.smart_back.dto.request.JwtRequest;
-import insa.smart.smart_back.dto.response.JwtResponse;
-import insa.smart.smart_back.entity.PlaceEntity;
 import insa.smart.smart_back.service.abstraction.PlaceService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -33,6 +27,20 @@ public class PlaceController {
     public ResponseEntity<?> getPlaces() throws Exception {
 
         return ResponseEntity.ok(placeService.getAll());
+    }
+
+    @GetMapping(value = "/resumed")
+    @ResponseBody
+    public ResponseEntity<?> getResumedPlaces() throws Exception {
+
+        return ResponseEntity.ok(placeService.getAllResumed());
+    }
+
+    @GetMapping(value = "/{id}")
+    @ResponseBody
+    public ResponseEntity<?> getPlace(@PathVariable Long id) throws Exception {
+
+        return ResponseEntity.ok(placeService.getPlaceById(id));
     }
 
 
