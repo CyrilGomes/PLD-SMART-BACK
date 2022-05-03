@@ -49,7 +49,7 @@ public class AuthenticationController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity<?> saveUser(@RequestBody UserDTO user) throws Exception {
         userService.registerNewUserAccount(user);
-        return ResponseEntity.ok("Register Success!");
+        return ResponseEntity.ok(user);
     }
 
     private void authenticate(String username, String password) throws Exception {
