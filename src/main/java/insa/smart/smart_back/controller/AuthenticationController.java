@@ -48,7 +48,8 @@ public class AuthenticationController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity<?> saveUser(@RequestBody UserDTO user) throws Exception {
-        return ResponseEntity.ok(userService.registerNewUserAccount(user));
+        userService.registerNewUserAccount(user);
+        return ResponseEntity.ok("Register Success!");
     }
 
     private void authenticate(String username, String password) throws Exception {
