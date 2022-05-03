@@ -9,6 +9,7 @@ import insa.smart.smart_back.dto.mapper.ResumedPlaceMapper;
 import insa.smart.smart_back.entity.*;
 import insa.smart.smart_back.repository.*;
 import insa.smart.smart_back.service.abstraction.PlaceService;
+import org.geolatte.geom.Point;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,6 +55,16 @@ public class PlaceServiceImpl implements PlaceService {
     @Override
     public List<ResumedPlaceDTO> getAllResumed() {
         return placeRepository.findAll().stream().map(resumedPlaceMapper::convertToDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PlaceDTO> getPlacesWithinRange(Point p, double range) {
+        return placeRepository.getPlaceWithinRange(p, range).stream().map(placeMapper::convertToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ResumedPlaceDTO> getResumedPlacesWithinRange(Point p, double range) {
+        return placeRepository.getPlaceWithinRange(p, range).stream().map(resumedPlaceMapper::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
