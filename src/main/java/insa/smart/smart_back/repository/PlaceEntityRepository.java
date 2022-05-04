@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface PlaceEntityRepository extends JpaRepository<PlaceEntity, Long> {
 
-    @Query(value = "SELECT pl FROM PlaceEntity pl WHERE ST_DistanceSphere(pl.position, :p) <:range", nativeQuery = true)
+    @Query( value = "SELECT * FROM place pl WHERE ST_DistanceSphere(pl.position, :p) " +
+            "<:range", nativeQuery = true)
     List<PlaceEntity> getPlaceWithinRange(Point p, double range);
 }

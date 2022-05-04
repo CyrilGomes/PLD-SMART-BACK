@@ -10,9 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.security.Principal;
 import java.text.ParseException;
+import java.util.Optional;
 
 import static org.geolatte.geom.crs.CoordinateReferenceSystems.WGS84;
 import static org.geolatte.geom.builder.DSL.*;
@@ -29,31 +31,42 @@ public class PlaceController {
 
     @GetMapping
     @ResponseBody
-    public ResponseEntity<?> getPlaces() throws Exception {
+    public ResponseEntity<?> getPlaces(@RequestParam(required = false) Optional<Double> lat,
+                                       @RequestParam(required = false) Optional<Double> lng,
+                                       @RequestParam(required = false) Optional<Double> radius) throws Exception {
 
-        return ResponseEntity.ok(placeService.getAll());
+        if(lat.isPresent() == lng.isPresent() == radius.isPresent()){
+            double trueLat = lat.get();
+            double tueLng = lng.get();
+            double trueRadius = radius.get();
+            Point<G2D> point = point(WGS84, g(tueLng, trueLat));
+            return ResponseEntity.ok(placeService.getPlacesWithinRange(point,trueRadius, false));
+        }
+
+        return ResponseEntity.ok(placeService.getAll(false));
     }
 
     @GetMapping(value = "/resumed")
     @ResponseBody
-    public ResponseEntity<?> getResumedPlaces() throws Exception {
+    public ResponseEntity<?> getResumedPlaces(@RequestParam(required = false) Optional<Double> lat,
+                                              @RequestParam(required = false) Optional<Double> lng,
+                                              @RequestParam(required = false) Optional<Double> radius) throws Exception {
+        if(lat.isPresent() == lng.isPresent() == radius.isPresent()){
+            double trueLat = lat.get();
+            double tueLng = lng.get();
+            double trueRadius = radius.get();
+            Point<G2D> point = point(WGS84, g(tueLng, trueLat));
+            return ResponseEntity.ok(placeService.getPlacesWithinRange(point,trueRadius, true));
+        }
 
-        return ResponseEntity.ok(placeService.getAllResumed());
+        if(lat.isPresent() || lng.isPresent() || radius.isPresent()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
+        return ResponseEntity.ok(placeService.getAll(true));
     }
 
-    @GetMapping(value = "/{lng}/{lat}/{radius}")
-    @ResponseBody
-    public ResponseEntity<?> getPlacesWithinRange(@PathVariable double lat, @PathVariable double lng, @PathVariable double radius) throws Exception {
-        Point<G2D> point = point(WGS84, g(lng, lat));
-        return ResponseEntity.ok(placeService.getPlacesWithinRange(point, radius));
-    }
 
-    @GetMapping(value = "/resumed/{lng}/{lat}/{radius}")
-    @ResponseBody
-    public ResponseEntity<?> getResumedPlacesWithinRange(@PathVariable double lat, @PathVariable double lng, @PathVariable double radius) throws Exception {
-        Point<G2D> point = point(WGS84, g(lng, lat));
-        return ResponseEntity.ok(placeService.getResumedPlacesWithinRange(point, radius));
-    }
 
     @GetMapping(value = "/{id}")
     @ResponseBody

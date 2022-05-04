@@ -2,7 +2,6 @@ package insa.smart.smart_back.service.implementation;
 
 import insa.smart.smart_back.dto.CommentDTO;
 import insa.smart.smart_back.dto.PlaceDTO;
-import insa.smart.smart_back.dto.ResumedPlaceDTO;
 import insa.smart.smart_back.dto.mapper.CommentMapper;
 import insa.smart.smart_back.dto.mapper.PlaceMapper;
 import insa.smart.smart_back.dto.mapper.ResumedPlaceMapper;
@@ -47,24 +46,20 @@ public class PlaceServiceImpl implements PlaceService {
 
 
     @Override
-    public List<PlaceDTO> getAll() {
+    public List<PlaceDTO> getAll(boolean resumed) {
+        if(resumed)
+            return placeRepository.findAll().stream().map(resumedPlaceMapper::convertToDTO).collect(Collectors.toList());
 
         return placeRepository.findAll().stream().map(placeMapper::convertToDto).collect(Collectors.toList());
     }
 
-    @Override
-    public List<ResumedPlaceDTO> getAllResumed() {
-        return placeRepository.findAll().stream().map(resumedPlaceMapper::convertToDTO).collect(Collectors.toList());
-    }
+
 
     @Override
-    public List<PlaceDTO> getPlacesWithinRange(Point p, double range) {
+    public List<PlaceDTO> getPlacesWithinRange(Point p, double range, boolean resumed) {
+        if(resumed)
+            return placeRepository.getPlaceWithinRange(p, range).stream().map(resumedPlaceMapper::convertToDTO).collect(Collectors.toList());
         return placeRepository.getPlaceWithinRange(p, range).stream().map(placeMapper::convertToDto).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<ResumedPlaceDTO> getResumedPlacesWithinRange(Point p, double range) {
-        return placeRepository.getPlaceWithinRange(p, range).stream().map(resumedPlaceMapper::convertToDTO).collect(Collectors.toList());
     }
 
     @Override

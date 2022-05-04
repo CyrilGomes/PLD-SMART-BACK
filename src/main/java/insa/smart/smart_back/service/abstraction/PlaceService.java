@@ -2,7 +2,6 @@ package insa.smart.smart_back.service.abstraction;
 
 import insa.smart.smart_back.dto.CommentDTO;
 import insa.smart.smart_back.dto.PlaceDTO;
-import insa.smart.smart_back.dto.ResumedPlaceDTO;
 import org.geolatte.geom.Point;
 
 import java.security.Principal;
@@ -11,13 +10,11 @@ import java.util.List;
 
 public interface PlaceService {
 
-    List<PlaceDTO> getAll();
+    List<PlaceDTO> getAll(boolean resumed);
 
-    List<ResumedPlaceDTO> getAllResumed();
 
-    List<PlaceDTO> getPlacesWithinRange(Point p, double range);
+    List<PlaceDTO> getPlacesWithinRange(Point p, double range, boolean resumed);
 
-    List<ResumedPlaceDTO> getResumedPlacesWithinRange(Point p, double range);
 
     PlaceDTO getPlaceById(Long id);
 
