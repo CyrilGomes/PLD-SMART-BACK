@@ -41,8 +41,8 @@ public class PlaceDTO {
     private String created_by;
 
     public void setPosition(Point position){
-        this.longitude = position.getPosition().getCoordinate(0);
-        this.latitude = position.getPosition().getCoordinate(1);
+        this.longitude = position.getPosition().getCoordinate(1);
+        this.latitude = position.getPosition().getCoordinate(0);
     }
 
     @JsonIgnore
