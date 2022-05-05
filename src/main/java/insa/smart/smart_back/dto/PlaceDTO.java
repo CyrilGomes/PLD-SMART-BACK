@@ -40,7 +40,6 @@ public class PlaceDTO {
 
     private String created_by;
 
-    private Boolean visited;
 
     public void setPosition(Point position){
         this.longitude = position.getPosition().getCoordinate(1);

@@ -2,6 +2,7 @@ package insa.smart.smart_back.controller;
 
 import insa.smart.smart_back.dto.CommentDTO;
 import insa.smart.smart_back.dto.PlaceDTO;
+import insa.smart.smart_back.dto.response.VisitResponse;
 import insa.smart.smart_back.service.abstraction.PlaceService;
 import org.geolatte.geom.G2D;
 import org.geolatte.geom.Point;
@@ -73,7 +74,7 @@ public class PlaceController {
         for (PlaceDTO i:placeService.getVisitedPlaceByUser(principal)
         ) {
             if(Objects.equals(i.getId(), placeDTO.getId())){
-                placeDTO.setVisited(true);
+                //placeDTO.setVisited(true);
                 return;
             }
         }
@@ -105,8 +106,7 @@ public class PlaceController {
     public ResponseEntity<?> visitPlace(Principal principal, @PathVariable Long id) {
 
 
-
-        return ResponseEntity.ok(placeService.visitPlace(id, principal));
+        return ResponseEntity.ok( new VisitResponse(placeService.visitPlace(id, principal)));
 
     }
 

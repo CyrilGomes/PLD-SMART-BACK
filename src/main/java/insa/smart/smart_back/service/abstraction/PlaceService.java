@@ -22,7 +22,7 @@ public interface PlaceService {
 
     void starPlace(Long placeId, Principal principal);
 
-    PlaceDTO visitPlace(Long placeId, Principal principal);
+    Long visitPlace(Long placeId, Principal principal);
 
     List<PlaceDTO> getVisitedPlaceByUser(Principal principal);
 
