@@ -11,7 +11,7 @@ public class ResumedPlaceMapper {
         PlaceDTO resumedPlaceDTO = new PlaceDTO();
         resumedPlaceDTO.setPosition(placeEntity.getPosition());
         resumedPlaceDTO.setId(placeEntity.getId());
-
+        resumedPlaceDTO.setName(placeEntity.getName());
         resumedPlaceDTO.setPosition(placeEntity.getPosition());
         return resumedPlaceDTO;
     }
