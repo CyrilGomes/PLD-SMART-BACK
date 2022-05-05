@@ -2,7 +2,6 @@ package insa.smart.smart_back.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import insa.smart.smart_back.entity.UserEntity;
 import lombok.Getter;
 import lombok.Setter;
