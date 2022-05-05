@@ -13,6 +13,7 @@ public class ResumedPlaceMapper {
         resumedPlaceDTO.setId(placeEntity.getId());
         resumedPlaceDTO.setName(placeEntity.getName());
         resumedPlaceDTO.setPosition(placeEntity.getPosition());
+
         return resumedPlaceDTO;
     }
 

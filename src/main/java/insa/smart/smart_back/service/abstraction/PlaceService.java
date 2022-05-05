@@ -22,7 +22,7 @@ public interface PlaceService {
 
     void starPlace(Long placeId, Principal principal);
 
-    void visitPlace(Long placeId, Principal principal);
+    PlaceDTO visitPlace(Long placeId, Principal principal);
 
     List<PlaceDTO> getVisitedPlaceByUser(Principal principal);
 
@@ -31,5 +31,7 @@ public interface PlaceService {
     void addComment(Long placeId, CommentDTO commentDTO, Principal principal);
 
     List<CommentDTO> getCommentsByPlace(Long placeId);
+
+
 
 }

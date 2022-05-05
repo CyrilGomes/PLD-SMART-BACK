@@ -2,6 +2,7 @@ package insa.smart.smart_back.dto.mapper;
 
 import insa.smart.smart_back.dto.PlaceDTO;
 import insa.smart.smart_back.entity.PlaceEntity;
+import insa.smart.smart_back.entity.PlaceUserVisitedEntity;
 import insa.smart.smart_back.entity.UserEntity;
 import insa.smart.smart_back.repository.UserRepository;
 import insa.smart.smart_back.service.JwtUserDetailsService;
@@ -25,6 +26,8 @@ public class PlaceMapper {
 
         // todo: c'est la faute de cyril
         place.setCreated_at(LocalDate.now());
+
+
 
         /*
         if (placeDTO.getId() != null) {

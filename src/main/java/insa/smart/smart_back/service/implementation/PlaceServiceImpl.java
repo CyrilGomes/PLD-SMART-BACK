@@ -54,7 +54,6 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
 
-
     @Override
     public List<PlaceDTO> getPlacesWithinRange(Point p, double range, boolean resumed) {
         if(resumed)
@@ -90,7 +89,7 @@ public class PlaceServiceImpl implements PlaceService {
 
 
     @Override
-    public void visitPlace(Long placeId, Principal principal) {
+    public PlaceDTO visitPlace(Long placeId, Principal principal) {
         UserEntity user = userRepository.findByEmail(principal.getName());
         PlaceEntity place = placeRepository.getById(placeId);
         PlaceUserVisitedEntity placeUserVisited = new PlaceUserVisitedEntity();
@@ -98,6 +97,9 @@ public class PlaceServiceImpl implements PlaceService {
         placeUserVisited.setPlace(place);
         placeUserVisited.setVisited_at(LocalDate.now());
         placeUserVisitedRepository.save(placeUserVisited);
+        PlaceDTO placeDTO = new PlaceDTO();
+        placeDTO.setId(placeId);
+        return placeDTO;
 
     }
 

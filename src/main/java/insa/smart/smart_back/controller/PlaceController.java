@@ -14,6 +14,7 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import java.security.Principal;
 import java.text.ParseException;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.geolatte.geom.crs.CoordinateReferenceSystems.WGS84;
@@ -68,11 +69,24 @@ public class PlaceController {
 
 
 
+    public void placeVisitedUpdate(PlaceDTO placeDTO, Principal principal){
+        for (PlaceDTO i:placeService.getVisitedPlaceByUser(principal)
+        ) {
+            if(Objects.equals(i.getId(), placeDTO.getId())){
+                placeDTO.setVisited(true);
+                return;
+            }
+        }
+    }
+
+
     @GetMapping(value = "/{id}")
     @ResponseBody
-    public ResponseEntity<?> getPlace(@PathVariable Long id) throws Exception {
+    public ResponseEntity<?> getPlace(Principal principal, @PathVariable Long id) throws Exception {
+        PlaceDTO placeDTO = placeService.getPlaceById(id);
 
-        return ResponseEntity.ok(placeService.getPlaceById(id));
+        placeVisitedUpdate(placeDTO, principal);
+        return ResponseEntity.ok(placeDTO);
     }
 
 
@@ -90,9 +104,9 @@ public class PlaceController {
     @ResponseBody
     public ResponseEntity<?> visitPlace(Principal principal, @PathVariable Long id) {
 
-        placeService.visitPlace(id, principal);
 
-        return ResponseEntity.ok("Place visited");
+
+        return ResponseEntity.ok(placeService.visitPlace(id, principal));
 
     }
 
